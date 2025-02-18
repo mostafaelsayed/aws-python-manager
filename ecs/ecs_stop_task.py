@@ -2,7 +2,7 @@ from clients.default_client import DefaultClient
 
 client = DefaultClient().get_instance('ecs')
 cluster = 'dev'
-family = 'freelancer-backend'
+family = 'mysql-organizer'
 tasks_response = client.list_tasks(
     cluster=cluster,
     family=family

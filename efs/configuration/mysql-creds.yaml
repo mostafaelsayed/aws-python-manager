@@ -1,0 +1,5 @@
+file_system_name: 'organizer-sql-creds'
+mount_target:
+    subnet_id: '<SUBNET>'
+    security_groups: 
+      - '<SECURITY_GROUP_1>'

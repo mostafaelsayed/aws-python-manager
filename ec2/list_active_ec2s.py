@@ -1,7 +1,7 @@
-from clients.default_client import DefaultClient
+import clients.default_client as default_client
 import utils.file_utils as file_utils
 
-ec2 = DefaultClient().get_instance('ec2')
+ec2 = default_client.DefaultClient().get_instance('ec2')
 
 list = ec2.describe_instances()
 active_list = {'Reservations': []}

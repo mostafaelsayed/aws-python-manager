@@ -1,0 +1,52 @@
+family: 'mysql-organizer'
+volumes:
+  - name: 'organizer-sql-creds'
+    efsVolumeConfiguration: 
+      fileSystemName: 'organizer-sql-creds'
+  - name: 'organizer-sql-startup-scripts'
+    efsVolumeConfiguration: 
+      fileSystemName: 'organizer-sql-startup-scripts'
+  - name: 'organizer-sql-data'
+    efsVolumeConfiguration: 
+      fileSystemName: 'organizer-sql-data'
+containerDefinitions:
+  - mountPoints:
+      - sourceVolume: 'organizer-sql-creds'
+        containerPath: '/run/secrets'
+      - sourceVolume: 'organizer-sql-startup-scripts'
+        containerPath: '/docker-entrypoint-initdb.d'
+      - sourceVolume: 'organizer-sql-data'
+        containerPath: '/var/lib/mysql'
+    name: 'mysql-organizer'
+    essential: True
+    logConfiguration:
+      logDriver: 'awslogs'
+      options:
+        awslogs-region: 'eu-west-1'
+        awslogs-group: 'organizer'
+        awslogs-stream-prefix: 'ecs'
+        awslogs-create-group: 'true'
+    portMappings:
+      - containerPort: 3306
+        hostPort: 3306
+    environment:
+      - name: 'MYSQL_ROOT_PASSWORD_FILE'
+        value: 'run/secrets/sql-root-credentials.txt'
+      - name: 'MYSQL_PASSWORD_FILE'
+        value: 'run/secrets/sql-password.txt'
+      - name: 'MYSQL_USER_FILE'
+        value: 'run/secrets/sql-user.txt'
+    image: '<IMAGE>'
+cpu: '512'
+memory: '1024'
+runtimePlatform:
+  cpuArchitecture: 'X86_64'
+  operatingSystemFamily: 'LINUX'
+taskRoleArn: 'ecsTaskRole'
+executionRoleArn: 'ecsTaskExecutionRole'
+tags:
+  - key: 'app'
+    value: 'organizer'
+requiresCompatibilities:
+  - 'FARGATE'
+networkMode: 'awsvpc'

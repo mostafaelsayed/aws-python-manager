@@ -1,0 +1,16 @@
+taskDefinition: 'mysql-organizer'
+cluster: 'dev'
+count: 1
+enableECSManagedTags: False
+enableExecuteCommand: True
+launchType: 'FARGATE'
+networkConfiguration:
+  awsvpcConfiguration:
+    subnets:
+      - '<SUBNET>'
+    securityGroups:
+      - '<SECURITY_GROUP_1>'
+    assignPublicIp: 'ENABLED'
+tags: 
+  - key: 'app'
+    value: 'organizer'
