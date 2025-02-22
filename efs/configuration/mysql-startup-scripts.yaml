@@ -1,5 +1,0 @@
-file_system_name: 'organizer-sql-startup-scripts'
-mount_target:
-    subnet_id: '<SUBNET>'
-    security_groups: 
-      - '<SECURITY_GROUP_1>'

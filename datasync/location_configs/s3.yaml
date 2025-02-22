@@ -1,2 +1,0 @@
-bucket_name: 'organizer-backend-sql-secrets'
-bucket_access_role_name: 'AWSDataSyncS3BucketAccess-organizer-backend-sql-scripts-493d4'

@@ -1,4 +1,6 @@
 - script to add role
+- script to remove DataSync location
+- script to remove DataSync task
 - script to add policy
-- script to sync from S3 to file system using DataSync
 - only print that the script is executed successfully, instead of full response
+- script to automate the whole process of syncing S3 with EFS using DataSync

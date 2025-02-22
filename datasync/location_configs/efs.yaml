@@ -1,5 +1,0 @@
-file_system_name: 'organizer-sql-creds'
-ec2_config:
-  subnet: '<SUBNET>'
-  security_groups:
-    - '<SECURITY_GROUP_1>'

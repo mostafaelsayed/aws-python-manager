@@ -1,9 +1,11 @@
 from clients.default_client import DefaultClient
-
+from utils.file_utils import parse
 client = DefaultClient()
 ecs = client.get_instance('ecs')
 env = client.get_env()
-task_definition_name = 'mysql-organizer'
+reference = parse('ecs/task-configuration/current.yaml')['task_reference']
+config = parse('ecs/task-configuration/{0}/task-definition.yaml'.format(reference))
+task_definition_name = config['family']
 task_definition = ecs.describe_task_definition(
     taskDefinition=task_definition_name
 )

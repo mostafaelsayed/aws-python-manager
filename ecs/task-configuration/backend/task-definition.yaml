@@ -1,0 +1,28 @@
+family: 'organizer-backend'
+containerDefinitions:
+  - name: 'organizer-backend'
+    essential: True
+    logConfiguration:
+      logDriver: 'awslogs'
+      options:
+        awslogs-region: 'eu-west-1'
+        awslogs-group: 'organizer'
+        awslogs-stream-prefix: 'ecs'
+        awslogs-create-group: 'true'
+    portMappings:
+      - containerPort: 4000
+        hostPort: 4000
+    image: '<IMAGE>'
+cpu: '512'
+memory: '1024'
+runtimePlatform:
+  cpuArchitecture: 'X86_64'
+  operatingSystemFamily: 'LINUX'
+taskRoleArn: 'ecsTaskRole'
+executionRoleArn: 'ecsTaskExecutionRole'
+tags:
+  - key: 'app'
+    value: 'organizer'
+requiresCompatibilities:
+  - 'FARGATE'
+networkMode: 'awsvpc'

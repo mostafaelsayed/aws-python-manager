@@ -1,17 +1,16 @@
 from clients.default_client import DefaultClient
-from utils.file_utils import parse
-import efs_utils
+from mount_target_waiter import create_mount_target_waiter
 
-client = DefaultClient()
-instance = client.get_instance('efs')
-current = parse('efs/configuration/current.yaml')
-reference = current['file_system_reference']
-config = parse('efs/configuration/{0}.yaml'.format(reference))
-file_system_name = config['file_system_name']
-file_system_id = efs_utils.get_file_system_id_by_name(file_system_name)
-response = instance.create_mount_target(
-    FileSystemId=file_system_id,
-    SubnetId=config['mount_target']['subnet_id'],
-    SecurityGroups=config['mount_target']['security_groups']
-)
-print(response)
+def create_mount_target(config, file_system_id):
+    client = DefaultClient()
+    instance = client.get_instance('efs')
+    response = instance.create_mount_target(
+        FileSystemId=file_system_id,
+        SubnetId=config['mount_target']['subnet_id'],
+        SecurityGroups=config['mount_target']['security_groups']
+    )
+    mount_target_id = response['MountTargetId']
+    if mount_target_id != None:
+        print('creating mount target with id: ', mount_target_id)
+    create_mount_target_waiter(instance, 'available').wait(MountTargetId=mount_target_id)
+    print('Mount target created successfully')

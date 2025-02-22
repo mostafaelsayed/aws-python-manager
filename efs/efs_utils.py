@@ -8,7 +8,6 @@ def get_file_system_id_by_name(name):
             {'Key': 'file-system-name', 'Values': [name]}
         ]
     )
-    print(file_system)
     file_system_id = file_system['ResourceTagMappingList'][0]['ResourceARN'].split('/')[-1]
 
     return file_system_id
