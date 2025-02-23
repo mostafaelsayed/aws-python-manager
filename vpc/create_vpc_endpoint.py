@@ -1,72 +1,69 @@
 from clients.default_client import DefaultClient
+from utils.file_utils import parse
 
-client = DefaultClient()
-instance = client.get_instance('ec2')
+def create_vpc_endpoints():
+    client = DefaultClient()
+    instance = client.get_instance('ec2')
+    endpoints = parse('vpc/vpc_endpoint_config.yaml')
+    
+    for endpoint in endpoints:
+        route_table_ids = []
+        subnet_ids = []
+        security_group_ids = []
+        
+        args = {
+            'DryRun': False,
+            'VpcEndpointType': endpoint['type'],
+            'VpcId': endpoint['vpc_id'],
+            'ServiceName': endpoint['service_name'],
+            'TagSpecifications': [
+                {
+                    'ResourceType': endpoint['resource_type'],
+                    'Tags': [
+                        {
+                            'Key': 'Name',
+                            'Value': endpoint['name']
+                        },
+                    ]
+                },
+            ],
+                        # SubnetConfigurations=[
+            #     {
+            #         'SubnetId': 'subnet-09f4e2c056b9cfb50',
+            #         'Ipv4': 'string',
+            #         'Ipv6': 'string'
+            #     },
+            # ],
+            # ServiceNetworkArn='string',
+            # ResourceConfigurationArn='string',
+            # ServiceRegion='string'
+        }
 
-endpoints = [
-    {
-        'service_name': 'com.amazonaws.eu-west-1.ecr.api',
-        'name': 'ecr-api-endpoint'
-    },
-    {
-        'service_name': 'com.amazonaws.eu-west-1.ecr.dkr',
-        'name': 'ecr-dkr-endpoint'
-    },
-    {
-        'service_name': 'com.amazonaws.eu-west-1.ecs',
-        'name': 'ecs-endpoint'
-    },
-    {
-        'service_name': 'com.amazonaws.eu-west-1.ecs-agent',
-        'name': 'ecs-agent-endpoint'
-    },
-    {
-        'service_name': 'com.amazonaws.eu-west-1.ecs-telemetry',
-        'name': 'ecs-telemetry-endpoint'
-    }
-]
-for endpoint in endpoints:
-    response = instance.create_vpc_endpoint(
-        DryRun=False,
-        VpcEndpointType='Interface',
-        VpcId='vpc-0268b786efee82004',
-        ServiceName=endpoint['service_name'],
-        # PolicyDocument='string',
-        # RouteTableIds=[
-        #     'string',
-        # ],
-        SubnetIds=[
-            'subnet-09f4e2c056b9cfb50',
-        ],
-        SecurityGroupIds=[
-            'sg-04c778d175541256a',
-        ],
-        IpAddressType='ipv4',
-        DnsOptions={
-            'DnsRecordIpType': 'ipv4'
-        },
-        PrivateDnsEnabled=True,
-        TagSpecifications=[
-            {
-                'ResourceType': 'vpc-endpoint',
-                'Tags': [
-                    {
-                        'Key': 'Name',
-                        'Value': endpoint['name']
-                    },
-                ]
-            },
-        ],
-        # SubnetConfigurations=[
-        #     {
-        #         'SubnetId': 'subnet-09f4e2c056b9cfb50',
-        #         'Ipv4': 'string',
-        #         'Ipv6': 'string'
-        #     },
-        # ],
-        # ServiceNetworkArn='string',
-        # ResourceConfigurationArn='string',
-        # ServiceRegion='string'
-    )
+        if 'route_table_ids' in endpoint:
+            for id in endpoint['route_table_ids']:
+                route_table_ids.append(id)
+            args['RouteTableIds'] = route_table_ids
+        if 'subnet_ids' in endpoint:
+            for id in endpoint['subnet_ids']:
+                subnet_ids.append(id)
+            args['SubnetIds'] = subnet_ids
+        if 'security_group_ids' in endpoint:
+            for id in endpoint['security_group_ids']:
+                security_group_ids.append(id)
+            args['SecurityGroupIds'] = security_group_ids
+        if 'private_dns' in endpoint:
+            args['PrivateDnsEnabled'] = endpoint['private_dns']
+        if 'ip_address_type' in endpoint:
+            args['IpAddressType'] = endpoint['ip_address_type']
+        if 'dns' in endpoint:
+            dns_record_ip_type = 'ipv4'
+            if endpoint['dns'] != None and 'dns_record_ip_type' in endpoint['dns']:
+                dns_record_ip_type = endpoint['dns']['dns_record_ip_type']
+            args['DnsOptions'] = {
+                'DnsRecordIpType': dns_record_ip_type
+            }
+        response = instance.create_vpc_endpoint(**args)
 
-    print(response)
+        print(response)
+
+create_vpc_endpoints()
