@@ -3,9 +3,9 @@ volumes:
   - name: 'organizer-sql-creds'
     efsVolumeConfiguration: 
       fileSystemName: 'organizer-sql-creds'
-  - name: 'organizer-sql-startup-scripts'
+  - name: 'organizer-sql-scripts'
     efsVolumeConfiguration: 
-      fileSystemName: 'organizer-sql-startup-scripts'
+      fileSystemName: 'organizer-sql-scripts'
   - name: 'organizer-sql-data'
     efsVolumeConfiguration: 
       fileSystemName: 'organizer-sql-data'
@@ -13,7 +13,7 @@ containerDefinitions:
   - mountPoints:
       - sourceVolume: 'organizer-sql-creds'
         containerPath: '/run/secrets'
-      - sourceVolume: 'organizer-sql-startup-scripts'
+      - sourceVolume: 'organizer-sql-scripts'
         containerPath: '/docker-entrypoint-initdb.d'
       - sourceVolume: 'organizer-sql-data'
         containerPath: '/var/lib/mysql'

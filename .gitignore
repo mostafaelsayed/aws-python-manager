@@ -1,9 +1,10 @@
 config/*account/credentials.yaml
 config/*account/env.yaml
-venv
+.venv*
 build
 *.egg-info
 dist
 output
 __pycache__
 regions.yaml
+.vscode*
