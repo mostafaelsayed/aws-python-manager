@@ -1,4 +1,4 @@
-taskDefinition: 'mysql-organizer'
+taskDefinition: 'organizer-db'
 cluster: 'dev'
 count: 1
 enableECSManagedTags: False
@@ -8,8 +8,6 @@ networkConfiguration:
   awsvpcConfiguration:
     subnets:
       - '<SUBNET>'
-    securityGroups:
-      - '<SECURITY_GROUP_1>'
     assignPublicIp: 'ENABLED'
 tags: 
   - key: 'app'

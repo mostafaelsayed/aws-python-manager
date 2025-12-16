@@ -1,4 +1,4 @@
-family: 'mysql-organizer'
+family: 'organizer-db'
 volumes:
   - name: 'organizer-sql-creds'
     efsVolumeConfiguration: 
@@ -17,7 +17,7 @@ containerDefinitions:
         containerPath: '/docker-entrypoint-initdb.d'
       - sourceVolume: 'organizer-sql-data'
         containerPath: '/var/lib/mysql'
-    name: 'mysql-organizer'
+    name: 'organizer-db'
     essential: True
     logConfiguration:
       logDriver: 'awslogs'

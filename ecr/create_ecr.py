@@ -16,7 +16,7 @@ response = ecr.create_repository(
     ],
     imageTagMutability='MUTABLE', # 'MUTABLE'|'IMMUTABLE'
     imageScanningConfiguration={
-        'scanOnPush': True|False
+        'scanOnPush': False
     },
     encryptionConfiguration={
         'encryptionType': 'AES256'

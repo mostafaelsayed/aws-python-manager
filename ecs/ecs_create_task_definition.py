@@ -3,7 +3,6 @@ from utils.file_utils import parse
 import efs.efs_utils as efs_utils
 client = DefaultClient()
 instance = client.get_instance('ecs')
-region_value = client.get_region()
 env = client.get_env()
 reference = parse('ecs/task-configuration/current.yaml')['task_reference']
 task_definition = parse('ecs/task-configuration/{0}/task-definition.yaml'.format(reference))
