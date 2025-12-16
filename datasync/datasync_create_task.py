@@ -6,8 +6,8 @@ def create_task(source_location_id, destination_location_id):
     env = client.get_env()
     instance = client.get_instance('datasync')
     response = instance.create_task(
-        SourceLocationArn='arn:aws:datasync:{0}:{1}:location/{2}'.format(client.get_region(), env['aws_account_id'], source_location_id),
-        DestinationLocationArn='arn:aws:datasync:{0}:{1}:location/{2}'.format(client.get_region(), env['aws_account_id'], destination_location_id),
+        SourceLocationArn='arn:aws:datasync:{0}:{1}:location/{2}'.format(client.region, env['aws_account_id'], source_location_id),
+        DestinationLocationArn='arn:aws:datasync:{0}:{1}:location/{2}'.format(client.region, env['aws_account_id'], destination_location_id),
     )
     if response['TaskArn'] != None:
         print('DataSync task with ARN: {0} has been created successfully'.format(response['TaskArn']))

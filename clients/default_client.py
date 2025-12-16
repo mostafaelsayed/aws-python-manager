@@ -6,6 +6,7 @@ account_directory = 'config/my_account'
 class DefaultClient:
     def __init__(self):
         self.sess = boto3.Session(profile_name='aws-python-manager')
+        self.region = self.sess.region_name
     def get_instance(self, service_name):
         return self.sess.client(service_name)
     def get_env(self):

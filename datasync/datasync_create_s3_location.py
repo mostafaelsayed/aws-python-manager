@@ -8,7 +8,7 @@ def create_s3_location(s3_location_config):
     response = instance.create_location_s3(
         S3BucketArn='arn:aws:s3:::' + s3_bucket_name,
         S3Config={
-            'BucketAccessRoleArn': 'arn:aws:iam::{0}:role/service-role/{1}'.format(env['aws_account_id'], s3_location_config['bucket_access_role_name']),
+            'BucketAccessRoleArn': 'arn:aws:iam::{0}:role/{1}'.format(env['aws_account_id'], s3_location_config['bucket_access_role_name']),
         }
     )
 
