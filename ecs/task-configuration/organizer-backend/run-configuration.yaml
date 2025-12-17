@@ -10,7 +10,7 @@ networkConfiguration:
       - '<SUBNET>' # public subnet
     securityGroups:
       - '<SECURITY_GROUP>'
-    assignPublicIp: 'ENABLED'
+    assignPublicIp: 'DISABLED'
 tags: 
   - key: 'app'
     value: 'organizer'

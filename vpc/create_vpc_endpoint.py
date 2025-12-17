@@ -4,7 +4,7 @@ from utils.file_utils import parse
 def create_vpc_endpoints():
     client = DefaultClient()
     instance = client.get_instance('ec2')
-    endpoints = parse('vpc/vpc_endpoint_config.yaml')
+    endpoints = parse('vpc/vpc-endpoint-configs/ecr_config.yaml')
     
     for endpoint in endpoints:
         route_table_ids = []

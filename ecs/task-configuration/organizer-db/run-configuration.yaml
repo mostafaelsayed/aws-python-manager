@@ -8,7 +8,7 @@ networkConfiguration:
   awsvpcConfiguration:
     subnets:
       - '<SUBNET>'
-    assignPublicIp: 'ENABLED'
+    assignPublicIp: 'DISABLED'
 tags: 
   - key: 'app'
     value: 'organizer'

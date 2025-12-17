@@ -9,3 +9,5 @@ __pycache__
 regions.yaml
 .vscode*
 values.yaml
+ecs/task-configuration*
+vpc/vpc-endpoint-configs
