@@ -1,3 +1,0 @@
-- script to add role
-- script to add policy
-- only print that the script is executed successfully, instead of full response
