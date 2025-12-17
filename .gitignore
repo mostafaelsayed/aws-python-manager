@@ -1,0 +1,13 @@
+config/*account/credentials.yaml
+config/*account/env.yaml
+.venv*
+build
+*.egg-info
+dist
+output
+__pycache__
+regions.yaml
+.vscode*
+values.yaml
+ecs/task-configuration*
+vpc/vpc-endpoint-configs

@@ -1,0 +1,2 @@
+# exec into fargate
+aws ecs execute-command --cluster dev --task 358e94e3e1b6456dba34f8c2932240b5 --command "bash" --interactive

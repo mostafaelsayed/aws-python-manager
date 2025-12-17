@@ -1,0 +1,22 @@
+- source:
+    type: 's3'
+    bucket_name: 'organizer-backend-sql-scripts'
+    bucket_access_role_name: '<DATA_SYNC_BUCKET_ACCESS_ROLE_NAME>'
+  destination:
+    type: 'efs'
+    file_system_name: 'organizer-sql-scripts'
+    ec2_config:
+      subnet: '<SUBNET>'
+      security_groups:
+        - '<SECURITY_GROUP>'
+- source:
+    type: 's3'
+    bucket_name: 'organizer-backend-sql-secrets'
+    bucket_access_role_name: '<DATA_SYNC_BUCKET_ACCESS_ROLE_NAME>'
+  destination:
+    type: 'efs'
+    file_system_name: 'organizer-sql-creds'
+    ec2_config:
+      subnet: '<SUBNET>'
+      security_groups:
+        - '<SECURITY_GROUP>'
