@@ -11,3 +11,4 @@ regions.yaml
 values.yaml
 ecs/task-configuration*
 vpc/vpc-endpoint-configs
+ecs/service-configuration

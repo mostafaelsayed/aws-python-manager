@@ -4,7 +4,7 @@ from utils.file_utils import parse
 def create_vpc_endpoints():
     client = DefaultClient()
     instance = client.get_instance('ec2')
-    endpoints = parse('vpc/vpc-endpoint-configs/ecr_config.yaml')
+    endpoints = parse('vpc/vpc-endpoint-configs/vpc_endpoint_config.yaml')
     
     for endpoint in endpoints:
         route_table_ids = []
@@ -27,16 +27,6 @@ def create_vpc_endpoints():
                     ]
                 },
             ],
-                        # SubnetConfigurations=[
-            #     {
-            #         'SubnetId': 'subnet-09f4e2c056b9cfb50',
-            #         'Ipv4': 'string',
-            #         'Ipv6': 'string'
-            #     },
-            # ],
-            # ServiceNetworkArn='string',
-            # ResourceConfigurationArn='string',
-            # ServiceRegion='string'
         }
 
         if 'route_table_ids' in endpoint:
