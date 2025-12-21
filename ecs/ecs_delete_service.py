@@ -1,6 +1,6 @@
 from clients.default_client import DefaultClient
 from utils.file_utils import parse
-from utils.common_utils import attach_ecs_service_connect_services
+
 client = DefaultClient()
 instance = client.get_instance('ecs')
 reference = parse('ecs/task-configuration/current.yaml')['task_reference']
