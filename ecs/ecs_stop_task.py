@@ -5,17 +5,20 @@ client = DefaultClient().get_instance('ecs')
 cluster = 'dev'
 references = parse('ecs/task-configuration/current.yaml')['task_references']
 for reference in references:
-    config = parse('ecs/task-configuration/{0}/task-definition.yaml'.format(reference))
-    family = config['family']
-    tasks_response = client.list_tasks(
-        cluster=cluster,
-        family=family
-    )
-    print(tasks_response)
-    for task_arn in tasks_response['taskArns']:
-        response = client.stop_task(
+    try:
+        config = parse('ecs/task-configuration/{0}/task-definition.yaml'.format(reference))
+        family = config['family']
+        tasks_response = client.list_tasks(
             cluster=cluster,
-            task=task_arn
+            family=family
         )
+        print(tasks_response)
+        for task_arn in tasks_response['taskArns']:
+            response = client.stop_task(
+                cluster=cluster,
+                task=task_arn
+            )
 
-        print(response)
+            print(response)
+    except Exception as e:
+        print('error')
