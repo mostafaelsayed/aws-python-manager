@@ -3,7 +3,7 @@ from utils.file_utils import parse
 
 client = DefaultClient().get_instance('ecs')
 cluster = 'dev'
-references = parse('ecs/task-configuration/current.yaml')['task_references']
+references = parse('ecs/current.yaml')['task_references']
 for reference in references:
     try:
         config = parse('ecs/task-configuration/{0}/task-definition.yaml'.format(reference))

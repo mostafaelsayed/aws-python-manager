@@ -1,0 +1,4 @@
+task_references:
+  - 'organizer-db'
+  - 'organizer-backend'
+  - 'organizer-frontend'

@@ -3,7 +3,7 @@ from utils.file_utils import parse
 from utils.common_utils import attach_ecs_service_connect_services
 client = DefaultClient()
 instance = client.get_instance('ecs')
-references = parse('ecs/task-configuration/current.yaml')['task_references']
+references = parse('ecs/current.yaml')['task_references']
 for reference in references:
     try:
         service_config = parse('ecs/service-configuration/{0}/service_config.yaml'.format(reference))
