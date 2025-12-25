@@ -1,13 +1,27 @@
 from clients.default_client import DefaultClient
 from utils.file_utils import parse
 from utils.common_utils import attach_ecs_service_connect_services
+
 client = DefaultClient()
 instance = client.get_instance('ecs')
 references = parse('ecs/current.yaml')['task_references']
+target_group_arns = []
+load_balancer_arns = []
+load_balancers_config = []
+
 for reference in references:
     try:
+        task_definition = parse('ecs/task-configuration/{0}/task-definition.yaml'.format(reference))
         service_config = parse('ecs/service-configuration/{0}/service_config.yaml'.format(reference))
+        if 'load_balancers' in service_config:
+            for index, alb in enumerate(service_config['load_balancers']):
+                load_balancers_config.append({
+                    'containerPort': task_definition['containerDefinitions'][index]['portMappings'][0]['containerPort'],
+                    'containerName': task_definition['containerDefinitions'][index]['name'],
+                    'targetGroupArn': client.get_instance('elbv2').describe_target_groups(Names=[alb['target_group_name']])['TargetGroups'][0]['TargetGroupArn']
+                })
         response = instance.create_service(
+            loadBalancers=load_balancers_config,
             cluster=service_config['cluster'],
             serviceName=service_config['service_name'],
             taskDefinition=service_config['task_definition'],
